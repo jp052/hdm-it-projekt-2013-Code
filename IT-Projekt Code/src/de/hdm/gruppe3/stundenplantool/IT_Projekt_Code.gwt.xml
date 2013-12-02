@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.1//EN"
   "http://google-web-toolkit.googlecode.com/svn/tags/2.5.1/distro-source/core/src/gwt-module.dtd">
-<module rename-to='it_projekt_code'>
+<module rename-to='stundenplantool'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
 
@@ -20,7 +20,7 @@
   <!-- Other module inherits                                      -->
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='de.hdm.gruppe3.stundenplantool.client.IT_Projekt_Code'/>
+  <entry-point class='de.hdm.gruppe3.stundenplantool.client.StundenplanTool'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

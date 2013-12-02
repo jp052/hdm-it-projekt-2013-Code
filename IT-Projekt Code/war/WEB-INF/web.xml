@@ -13,12 +13,12 @@
   
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/it_projekt_code/greet</url-pattern>
+    <url-pattern>/stundenplantool/greet</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>IT_Projekt_Code.html</welcome-file>
+    <welcome-file>StundenplanTool.html</welcome-file>
   </welcome-file-list>
 
 </web-app>
