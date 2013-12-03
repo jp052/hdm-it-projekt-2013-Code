@@ -1,6 +1,6 @@
 package de.hdm.gruppe3.stundenplantool.shared.bo;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 public class Zeitslot extends BusinessObject {
 
@@ -10,11 +10,11 @@ public class Zeitslot extends BusinessObject {
 	private int anfangszeit;
 	private int dauer;
 	private String Wochentag;
-	private ArrayList<LVDurchfuehrung> durchfuehrungen = new ArrayList<LVDurchfuehrung>();
+	private Vector<LVDurchfuehrung> durchfuehrungen = new Vector<LVDurchfuehrung>();
 
 	// Konstruktor
 	public Zeitslot(int anfangszeit, int dauer, String wochentag,
-			ArrayList<LVDurchfuehrung> durchfuehrungen) {
+			Vector<LVDurchfuehrung> durchfuehrungen) {
 		this.anfangszeit = anfangszeit;
 		this.dauer = dauer;
 		Wochentag = wochentag;
@@ -48,11 +48,11 @@ public class Zeitslot extends BusinessObject {
 		Wochentag = wochentag;
 	}
 
-	public ArrayList<LVDurchfuehrung> getDurchfuehrungen() {
+	public Vector<LVDurchfuehrung> getDurchfuehrungen() {
 		return durchfuehrungen;
 	}
 
-	public void setDurchfuehrungen(ArrayList<LVDurchfuehrung> durchfuehrungen) {
+	public void setDurchfuehrungen(Vector<LVDurchfuehrung> durchfuehrungen) {
 		this.durchfuehrungen = durchfuehrungen;
 	}
 }
