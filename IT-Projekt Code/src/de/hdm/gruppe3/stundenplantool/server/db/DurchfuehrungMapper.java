@@ -10,7 +10,7 @@ import de.hdm.gruppe3.stundenplantool.shared.bo.*;
 
 
 public class DurchfuehrungMapper {
- /**
+ /** test
     * Die Klasse DurchfuehrungMapper wird nur eindfl instantiiert. Man spricht hierbei
     * von einem sogenannten <b>Singleton</b>.
     * <p>
