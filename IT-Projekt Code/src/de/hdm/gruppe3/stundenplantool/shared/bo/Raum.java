@@ -19,6 +19,10 @@ public class Raum extends BusinessObject {
 		this.durchfuehrungen = durchfuehrungen;
 	}
 
+	public Raum() {
+		// TODO Auto-generated constructor stub
+	}
+
 	// Getter und Setter
 	public String getBezeichnung() {
 		return bezeichnung;

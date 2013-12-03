@@ -20,6 +20,8 @@ public class Zeitslot extends BusinessObject {
 		Wochentag = wochentag;
 		this.durchfuehrungen = durchfuehrungen;
 	}
+	
+	public Zeitslot (){}
 
 	// Getter und Setter
 	public int getAnfangszeit() {

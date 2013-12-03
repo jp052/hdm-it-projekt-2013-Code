@@ -3,6 +3,10 @@ package de.hdm.gruppe3.stundenplantool.server.db;
 import java.sql.*;
 import java.util.Vector;
 
+import de.hdm.gruppe3.stundenplantool.shared.bo.Dozent;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Lehrveranstaltung;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Raum;
+
 //Import Impl Klasse Dozent
 // Import bo Dozent
 
@@ -47,8 +51,8 @@ public class DozentMapper {
 
      return dozentMapper;
    }
-   public Dozent anlegen(de.itproject.project.shared.bo.Dozent m ){
-    Connection con = DBConnection.connection();
+   public Dozent anlegen(Dozent m ){
+    Connection con = DBVerbindung.connection();
 
        try {
          Statement stmt = con.createStatement();
@@ -72,7 +76,7 @@ public class DozentMapper {
 
            // Jetzt erst erfolgt die tatsächliche Einfügeoperation
            stmt.executeUpdate("INSERT INTO dozent (PersonalNr, Vorname, Name) " + "VALUES ( "
-            + "NULL,'" + m.getVorname() + "','" + m.getName() +"')");
+            + "NULL,'" + m.getVorname() + "','" + m.getNachname() +"')");
          //}
        }
        catch (SQLException e2) {
@@ -98,7 +102,7 @@ public class DozentMapper {
       try {
         Statement stmt = con.createStatement();
 
-        stmt.executeUpdate("UPDATE dozent " + "SET Name=\"" + dozent.getName() + "\" SET Vorname=\"" + dozent.getVorname());
+        stmt.executeUpdate("UPDATE dozent " + "SET Name=\"" + dozent.getNachname() + "\" SET Vorname=\"" + dozent.getVorname());
 
       }
       catch (SQLException e2) {
@@ -115,12 +119,14 @@ public class DozentMapper {
       try {
         Statement stmt = con.createStatement();
 
-        stmt.executeUpdate("DELETE FROM dozent " + "WHERE dozent=" + dozent.getID());
+        stmt.executeUpdate("DELETE FROM dozent " + "WHERE dozent=" + dozent.getId());
 
       }
       catch (SQLException e2) {
         e2.printStackTrace();
       } 
+      
+      return dozent;
   }
   
   public Dozent findeName(Dozent dozent){
@@ -133,7 +139,7 @@ public class DozentMapper {
 
         // Statement ausfüllen und als Query an die DB schicken
         ResultSet rs = stmt.executeQuery("SELECT PersonalNr, Name, Vorname"
-            + "WHERE Name=" + dozent.name + " ORDER BY Name");
+            + "WHERE Name=" + dozent.getNachname() + " ORDER BY Name");
 
         /*
          * Da dozent Primärschlüssel ist, kann dozentx. nur ein Tupel zurückgegeben
@@ -141,12 +147,12 @@ public class DozentMapper {
          */
         if (rs.next()) {
           // Ergebnis-Tupel in Objekt umwandeln
-          Dozent dozent = new Dozent();
-          dozent.setID(rs.getInt("PersonalNr"));
-          dozent.setName(rs.getString("Name"));
-          dozent.setVorname(rs.getString("Vorname"));
+          Dozent d = new Dozent();
+          d.setId(rs.getInt("PersonalNr"));
+          d.setNachname(rs.getString("Name"));
+          d.setVorname(rs.getString("Vorname"));
 
-          return dozent;
+          return d;
         }
       }
       catch (SQLException e2) {
@@ -158,17 +164,17 @@ public class DozentMapper {
   }
    
 
-  public Dozent findeId(Dozent dozent){
+  public Dozent findeId(int d){
       // DB-Verbindung holen
       Connection con = DBVerbindung.connection();
-
+ 
       try {
         // Leeres SQL-Statement (JDBC) anlegen
         Statement stmt = con.createStatement();
 
         // Statement ausfüllen und als Query an die DB schicken
         ResultSet rs = stmt.executeQuery("SELECT PersonalNr, Name, Vorname FROM raum "
-            + "WHERE PersonalNr=" + dozent.id + " ORDER BY Name");
+            + "WHERE PersonalNr=" + d + " ORDER BY Name");
 
         /*
          * Da dozent Primärschlüssel ist, kann dozentx. nur ein Tupel zurückgegeben
@@ -177,8 +183,8 @@ public class DozentMapper {
         if (rs.next()) {
           // Ergebnis-Tupel in Objekt umwandeln
           Dozent dozent = new Dozent();
-          dozent.setID(rs.getInt("PersonalNr"));
-          dozent.setName(rs.getString("Name"));
+          dozent.setId(rs.getInt("PersonalNr"));
+          dozent.setNachname(rs.getString("Name"));
           dozent.setVorname(rs.getString("Vorname"));
 
           return dozent;
@@ -206,10 +212,10 @@ public class DozentMapper {
 
          // F¸r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt erstellt.
          while (rs.next()) {
-           dozent d = new Dozent();
+           Dozent d = new Dozent();
            d.setId(rs.getInt("PersonalNr"));
-           d.setVorname(rs.getInt("Vorname"));
-           d.setName(rs.getInt("Name"));
+           d.setVorname(rs.getString("Vorname"));
+           d.setNachname(rs.getString("Name"));
            
            // Hinzuf¸gen des neuen Objekts zum Ergebnisvektor
            result.addElement(d);
@@ -229,8 +235,9 @@ public class DozentMapper {
        * einfach den in dem Account-Objekt enthaltenen Fremdschl¸ssel f¸r den
        * Kontoinhaber. Der CustomerMapper l‰sst uns dann diese ID in ein Objekt
        * auf.
-       */
-      return LehrveranstaltungMapper.lvMapper().findeId(dozent.getDozent());
+       *
+       */      
+       return LehrveranstaltungMapper.lvMapper().findeId(dozent.getId());
     }
     
   public Raum findeRaum(Dozent dozent) {
@@ -240,6 +247,6 @@ public class DozentMapper {
        * Kontoinhaber. Der CustomerMapper l‰sst uns dann diese ID in ein Objekt
        * auf.
        */
-      return RaumMapper.raumMapper().findeId(dozent.getDozent());
+      return RaumMapper.raumMapper().findeId(dozent.getId());
     }  
 }

@@ -20,6 +20,10 @@ public class Semesterverband extends BusinessObject {
 		this.durchfuehungen = durchfuehungen;
 	}
 
+	public Semesterverband() {
+		// TODO Auto-generated constructor stub
+	}
+
 	// Getter und Setter
 	public String getSemester() {
 		return semester;

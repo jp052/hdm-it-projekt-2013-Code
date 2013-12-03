@@ -90,7 +90,7 @@ public class DurchfuehrungMapper {
         * explizite Rückgabe von a ist eher ein Stilmittel, um zu signalisieren,
         * dass sich das Objekt evtl. im Laufe der Methode verändert hat.
         */
-       return m;
+       return df;
    
   }
   
@@ -100,7 +100,7 @@ public class DurchfuehrungMapper {
       try {
         Statement stmt = con.createStatement();
 
-        stmt.executeUpdate("UPDATE df " + "\" SET RaumNr=\"" + r.getId() + "\" "+ "SET ZeitNr=\"" + z.getId() + "\" "+"SET SVNr=\"" + sv.getId() + "\" " + "SET EDVNr=\"" + lv.getOrt() + "\" "+ "WHERE df=" + df.getID());
+        stmt.executeUpdate("UPDATE df " + "\" SET RaumNr=\"" + r.getId() + "\" "+ "SET ZeitNr=\"" + z.getId() + "\" "+"SET SVNr=\"" + sv.getId() + "\" " + "SET EDVNr=\"" + lv.getId() + "\" "+ "WHERE df=" + df.getId());
 
       }
       catch (SQLException e2) {
@@ -117,15 +117,16 @@ public class DurchfuehrungMapper {
       try {
         Statement stmt = con.createStatement();
 
-        stmt.executeUpdate("DELETE FROM df " + "WHERE df=" + df.getID());
+        stmt.executeUpdate("DELETE FROM df " + "WHERE df=" + df.getId());
 
       }
       catch (SQLException e2) {
         e2.printStackTrace();
-      } 
+      }
+	return df; 
   }
   
-  public LVDurchfuehrung findeId(LVDurchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
+  public LVDurchfuehrung findeId(LVDurchfuehrung d, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
       // DB-Verbindung holen
       Connection con = DBVerbindung.connection();
 
@@ -135,7 +136,7 @@ public class DurchfuehrungMapper {
 
         // Statement ausfüllen und als Query an die DB schicken
         ResultSet rs = stmt.executeQuery("SELECT LVDNr, ZeitNr, SVNr, RaumNr, EDVNr FROM df "
-            + "WHERE LVDNr=" + df.getId + " ORDER BY LVDNr");
+            + "WHERE LVDNr=" + d.getId() + " ORDER BY LVDNr");
 
         /*
          * Da df Primärschlüssel ist, kann dfx. nur ein Tupel zurückgegeben

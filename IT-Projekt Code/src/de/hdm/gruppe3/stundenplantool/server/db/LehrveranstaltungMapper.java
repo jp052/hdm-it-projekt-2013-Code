@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.Vector;
+
+import de.hdm.gruppe3.stundenplantool.shared.bo.Dozent;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Lehrveranstaltung;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Raum;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Zeitslot;
 
 //Import Impl Klasse Dozent
 //Import bo Dozent
@@ -101,7 +105,7 @@ public class LehrveranstaltungMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("UPDATE Lehrveranstaltung " + "SET Bezeichnung=\"" + lv.getBezeichnung() + "\" SET Umfang=\"" + lv.getUmfang() + "\" "+ "SET Semester=\"" + lv.getSemester() + "WHERE LVNr=" + lv.getID());
+		      stmt.executeUpdate("UPDATE Lehrveranstaltung " + "SET Bezeichnung=\"" + lv.getBezeichnung() + "\" SET Umfang=\"" + lv.getUmfang() + "\" "+ "SET Semester=\"" + lv.getSemester() + "WHERE LVNr=" + lv.getId());
 
 		    }
 		    catch (SQLException e2) {
@@ -118,12 +122,13 @@ public class LehrveranstaltungMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("DELETE FROM Lehrveranstaltung " + "WHERE LVNr=" + lv.getID());
+		      stmt.executeUpdate("DELETE FROM Lehrveranstaltung " + "WHERE LVNr=" + lv.getId());
 
 		    }
 		    catch (SQLException e2) {
 		      e2.printStackTrace();
-		    } 
+		    }
+			return lv; 
 		}
 		
 		public Lehrveranstaltung findeName(Lehrveranstaltung lv){
@@ -136,7 +141,7 @@ public class LehrveranstaltungMapper {
 
 		      // Statement ausfüllen und als Query an die DB schicken
 		      ResultSet rs = stmt.executeQuery("SELECT LVNr, Bezeichnung, Umfang, Semester FROM Lehrveranstaltung "
-		          + "WHERE Bezeichnung=" + lv.bezeichnung + " ORDER BY bezeichnung");
+		          + "WHERE Bezeichnung=" + lv.getBezeichnung() + " ORDER BY bezeichnung");
 
 		      /*
 		       * Da lv Primärschlüssel ist, kann lvx. nur ein Tupel zurückgegeben
@@ -144,12 +149,12 @@ public class LehrveranstaltungMapper {
 		       */
 		      if (rs.next()) {
 		        // Ergebnis-Tupel in Objekt umwandeln
-		    	Lehrveranstaltung lv = new Lehrveranstaltung();
-		        lv.setID(rs.getInt("ID"));
-		        lv.setBezeichnung(rs.getString("Bezeichnung"));
-				lv.setUmfang(rs.getInt("Umfang"));
-				lv.setSemester(rs.getInt("Semester"));
-		        return lv;
+		    	Lehrveranstaltung lv1 = new Lehrveranstaltung();
+		        lv1.setId(rs.getInt("ID"));
+		        lv1.setBezeichnung(rs.getString("Bezeichnung"));
+				lv1.setUmfang(rs.getInt("Umfang"));
+				lv1.setSemester(rs.getInt("Semester"));
+		        return lv1;
 		      }
 		    }
 		    catch (SQLException e2) {
@@ -161,7 +166,7 @@ public class LehrveranstaltungMapper {
 		}
 	  
 
-		public Lehrveranstaltung findeId(Lehrveranstaltung lv){
+		public Lehrveranstaltung findeId(int i){
 		    // DB-Verbindung holen
 		    Connection con = DBVerbindung.connection();
 
@@ -171,7 +176,7 @@ public class LehrveranstaltungMapper {
 
 		      // Statement ausfüllen und als Query an die DB schicken
 		      ResultSet rs = stmt.executeQuery("SELECT LVNr, Bezeichnung, Umfang, Semester FROM Lehrveranstaltung "
-		          + "WHERE LVNr=" + lv.id + " ORDER BY Bezeichnung");
+		          + "WHERE LVNr=" + i + " ORDER BY Bezeichnung");
 
 		      /*
 		       * Da lv Primärschlüssel ist, kann lvx. nur ein Tupel zurückgegeben
@@ -180,12 +185,11 @@ public class LehrveranstaltungMapper {
 		      if (rs.next()) {
 		        // Ergebnis-Tupel in Objekt umwandeln
 		    	Lehrveranstaltung lv = new Lehrveranstaltung();
-		        lv.setID(rs.getInt("ID"));
-		        lv.setName(rs.getString("Name"));
-	lv.setVorname(rs.getString("Name"));
-	lv.setAnschrift(rs.getString("Anschrift"));
-	lv.setPLZ(rs.getInt("PLZ"));
-	lv.setOrt(rs.getString("Ort"));
+		        lv.setId(rs.getInt("LVNr"));
+		        lv.setBezeichnung(rs.getString("Bezeichnung"));
+		        lv.setUmfang(rs.getDouble("Umfang"));
+		        lv.setSemester(rs.getInt("Semester"));
+		        
 		        return lv;
 		      }
 		    }
@@ -214,7 +218,7 @@ public class LehrveranstaltungMapper {
 			        Lehrveranstaltung d = new Lehrveranstaltung();
 			        d.setId(rs.getInt("LVNr"));
 			        d.setBezeichnung(rs.getString("Bezeichnung"));
-					d.setUmfang(rs.getInt("Umfang");
+					d.setUmfang(rs.getInt("Umfang"));
 					d.setSemester(rs.getInt("Semester"));
 
 			        // Hinzuf¸gen des neuen Objekts zum Ergebnisvektor
@@ -236,7 +240,7 @@ public class LehrveranstaltungMapper {
 		     * Kontoinhaber. Der CustomerMapper l‰sst uns dann diese ID in ein Objekt
 		     * auf.
 		     */
-		    return DozentMapper.dozentMapper().findeId(lv.getLehrveranstaltung());
+		    return DozentMapper.dozentMapper().findeId(lv.getId());
 		  }
 		  
 		  public Zeitslot findeTermin(Lehrveranstaltung lv) {
@@ -246,7 +250,7 @@ public class LehrveranstaltungMapper {
 		     * Kontoinhaber. Der CustomerMapper l‰sst uns dann diese ID in ein Objekt
 		     * auf.
 		     */
-		    return ZeitslotMapper.zeitslotMapper().findeId(lv.getLehrveranstaltung());
+		    return ZeitslotMapper.zeitslotMapper().findeId(lv.getId());
 		  }
 		  
 		  public Raum findeRaum(Lehrveranstaltung lv) {
@@ -256,6 +260,6 @@ public class LehrveranstaltungMapper {
 		     * Kontoinhaber. Der CustomerMapper l‰sst uns dann diese ID in ein Objekt
 		     * auf.
 		     */
-		    return RaumMapper.raumMapper().findeId(lv.getLehrveranstaltung());
+		    return RaumMapper.raumMapper().findeId(lv.getId());
 		  }
 }

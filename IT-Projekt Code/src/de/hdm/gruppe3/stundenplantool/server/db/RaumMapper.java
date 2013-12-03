@@ -6,10 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.thies.bankProjekt.server.db.CustomerMapper;
-import de.hdm.thies.bankProjekt.server.db.DBConnection;
-import de.hdm.thies.bankProjekt.shared.bo.Account;
-import de.hdm.thies.bankProjekt.shared.bo.Customer;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Lehrveranstaltung;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Raum;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Zeitslot;
 
 //Import Impl Klasse Dozent
 //Import bo Dozent
@@ -54,7 +53,7 @@ public class RaumMapper {
 
 	    return raumMapper;
 	  }
-	  public Raum anlegen(de.itproject.project.shared.bo.Raum m ){
+	  public Raum anlegen(Raum m ){
 			 Connection con = DBVerbindung.connection();
 
 			    try {
@@ -105,7 +104,7 @@ public class RaumMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("UPDATE raum " + "SET Bezeichnung=\"" + raum.getBezeichnung() + "\" SET Kapazitaet=\"" + raum.getKapazitaet() + "WHERE RaumNr=" + raum.getID());
+		      stmt.executeUpdate("UPDATE raum " + "SET Bezeichnung=\"" + raum.getBezeichnung() + "\" SET Kapazitaet=\"" + raum.getKapazitaet() + "WHERE RaumNr=" + raum.getId());
 
 		    }
 		    catch (SQLException e2) {
@@ -122,15 +121,16 @@ public class RaumMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("DELETE FROM raum " + "WHERE RaumNr=" + raum.getID());
+		      stmt.executeUpdate("DELETE FROM raum " + "WHERE RaumNr=" + raum.getId());
 
 		    }
 		    catch (SQLException e2) {
 		      e2.printStackTrace();
-		    } 
+		    }
+			return raum; 
 		}
 		
-		public Raum findeName(Raum raum){
+		public Raum findeName(Raum r){
 		    // DB-Verbindung holen
 		    Connection con = DBVerbindung.connection();
 
@@ -140,7 +140,7 @@ public class RaumMapper {
 
 		      // Statement ausfüllen und als Query an die DB schicken
 		      ResultSet rs = stmt.executeQuery("SELECT RaumNr, Bezeichnung, KapazitaetFROM raum "
-		          + "WHERE Bezeichnung=" + raum.Bezeichnung + " ORDER BY Bezeichnung");
+		          + "WHERE Bezeichnung=" + r.getBezeichnung() + " ORDER BY Bezeichnung");
 
 		      /*
 		       * Da raum Primärschlüssel ist, kann raumx. nur ein Tupel zurückgegeben
@@ -149,9 +149,9 @@ public class RaumMapper {
 		      if (rs.next()) {
 		        // Ergebnis-Tupel in Objekt umwandeln
 		    	Raum raum = new Raum();
-		        raum.setID(rs.getInt("RaumNr"));
+		        raum.setId(rs.getInt("RaumNr"));
 		        raum.setBezeichnung(rs.getString("Bezeichnung"));
-				raum.setKapazitaet(rs.getString("Kapazitaet"));
+				raum.setKapazitaet(rs.getInt("Kapazitaet"));
 
 		        return raum;
 		      }
@@ -165,7 +165,7 @@ public class RaumMapper {
 		}
 	  
 
-		public Raum findeId(Raum raum){
+		public Raum findeId(int i){
 		    // DB-Verbindung holen
 		    Connection con = DBVerbindung.connection();
 
@@ -175,7 +175,7 @@ public class RaumMapper {
 
 		      // Statement ausfüllen und als Query an die DB schicken
 		      ResultSet rs = stmt.executeQuery("SELECT RaumNr, Bezeichnung, Kapazitaet FROM raum "
-		          + "WHERE RaumNr=" + raum.id + " ORDER BY Bezeichnung");
+		          + "WHERE RaumNr=" + i + " ORDER BY Bezeichnung");
 
 		      /*
 		       * Da raum Primärschlüssel ist, kann raumx. nur ein Tupel zurückgegeben
@@ -184,9 +184,9 @@ public class RaumMapper {
 		      if (rs.next()) {
 		        // Ergebnis-Tupel in Objekt umwandeln
 		    	Raum raum = new Raum();
-		        raum.setID(rs.getInt("RaumNr"));
+		        raum.setId(rs.getInt("RaumNr"));
 		        raum.setBezeichnung(rs.getString("Bezeichnung"));
-				raum.setKapazitaet(rs.getString("Kapazitaet"));
+				raum.setKapazitaet(rs.getInt("Kapazitaet"));
 
 		        return raum;
 		      }
@@ -235,7 +235,7 @@ public class RaumMapper {
 		     * Kontoinhaber. Der CustomerMapper l�sst uns dann diese ID in ein Objekt
 		     * auf.
 		     */
-		    return LehrveranstaltungMapper.lvMapper().findeId(raum.getRaum());
+		    return LehrveranstaltungMapper.lvMapper().findeId(raum.getId());
 		  }
 		
 	
@@ -247,7 +247,7 @@ public class RaumMapper {
 		     * Kontoinhaber. Der CustomerMapper l�sst uns dann diese ID in ein Objekt
 		     * auf.
 		     */
-		    return ZeitslotMapper.zeitslotMapper().findeId(raum.getRaum());
+		    return ZeitslotMapper.zeitslotMapper().findeId(raum.getId());
 		  }
 		
 }

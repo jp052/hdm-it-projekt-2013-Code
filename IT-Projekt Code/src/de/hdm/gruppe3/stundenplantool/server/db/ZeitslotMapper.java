@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.gruppe3.stundenplantool.shared.bo.Zeitslot;
+
 //Import Impl Klasse Dozent
 //Import bo Dozent
 
@@ -74,8 +76,8 @@ public class ZeitslotMapper {
 //			        stmt = con.createStatement();
 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-			        stmt.executeUpdate("INSERT INTO zeitslot (ZeitNr, Wochentag, Endzeit, Anfangszeit) " + "VALUES ( "
-			        	+ "NULL,'" + m.getWochentag() + "','" + m.getEndzeit() +"','" +m.getAnfangszeit()+ "')");
+			        stmt.executeUpdate("INSERT INTO zeitslot (ZeitNr, Wochentag, Anfangszeit) " + "VALUES ( "
+			        	+ "NULL,'" + m.getWochentag()  +"','" +m.getAnfangszeit()+ "')");
 			      //}
 			    }
 			    catch (SQLException e2) {
@@ -101,7 +103,7 @@ public class ZeitslotMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("UPDATE zeitslot " + "SET Wochentag=\"" + zeitslot.getWochentag() + "\" SET Endzeit=\"" + zeitslot.getEndzeit() + "\" "+ "SET Anfangszeit=\"" + zeitslot.getAnfangszeit() + "WHERE ZeitNr=" + zeitslot.getID());
+		      stmt.executeUpdate("UPDATE zeitslot " + "SET Wochentag=\"" + zeitslot.getWochentag() +  "\" "+ "SET Anfangszeit=\"" + zeitslot.getAnfangszeit() + "WHERE ZeitNr=" + zeitslot.getId());
 
 		    }
 		    catch (SQLException e2) {
@@ -118,15 +120,16 @@ public class ZeitslotMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("DELETE FROM zeitslot " + "WHERE ZeitNr=" + zeitslot.getID());
+		      stmt.executeUpdate("DELETE FROM zeitslot " + "WHERE ZeitNr=" + zeitslot.getId());
 
 		    }
 		    catch (SQLException e2) {
 		      e2.printStackTrace();
-		    } 
+		    }
+			return zeitslot; 
 		}
 		
-		public Zeitslot findeId(Zeitslot zeitslot){
+		public Zeitslot findeId(int i){
 		    // DB-Verbindung holen
 		    Connection con = DBVerbindung.connection();
 
@@ -136,7 +139,7 @@ public class ZeitslotMapper {
 
 		      // Statement ausfüllen und als Query an die DB schicken
 		      ResultSet rs = stmt.executeQuery("SELECT ID, Name, Vorname, Anschrift, PLZ, Ort FROM zeitslot "
-		          + "WHERE ID=" + zeitslot.id + " ORDER BY Name");
+		          + "WHERE ID=" + i + " ORDER BY Name");
 
 		      /*
 		       * Da zeitslot Primärschlüssel ist, kann zeitslotx. nur ein Tupel zurückgegeben
@@ -145,7 +148,7 @@ public class ZeitslotMapper {
 		      if (rs.next()) {
 		        // Ergebnis-Tupel in Objekt umwandeln
 		    	Zeitslot zeitslot = new Zeitslot();
-		        zeitslot.setID(rs.getInt("ID"));
+		        zeitslot.setId(rs.getInt("ID"));
 		        zeitslot.setWochentag(rs.getString("Wochentag"));
 				//zeitslot.setEndzeit(rs.getString("Endzeit"));   To-Do
 				//zeitslot.setAnfangszeit(rs.getString("Anfangszeit")); To-Do

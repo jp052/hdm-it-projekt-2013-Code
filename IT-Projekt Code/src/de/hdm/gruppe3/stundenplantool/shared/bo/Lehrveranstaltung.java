@@ -22,6 +22,10 @@ public class Lehrveranstaltung extends BusinessObject {
 		this.dozent = dozent;
 		this.durchfuehungen = durchfuehungen;
 	}
+	
+	public Lehrveranstaltung(){
+		
+	}
 
 	// Getter und Setter
 	public String getBezeichnung() {

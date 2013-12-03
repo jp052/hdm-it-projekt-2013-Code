@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.Vector;
+
+import de.hdm.gruppe3.stundenplantool.shared.bo.Lehrveranstaltung;
+import de.hdm.gruppe3.stundenplantool.shared.bo.Semesterverband;
 
 //Import Impl Klasse Dozent
 //Import bo Dozent
@@ -50,7 +52,7 @@ public class SemesterverbandMapper {
 
 	    return svMapper;
 	  }
-	  public Semesterverband anlegen(de.itproject.project.shared.bo.Semesterverband m ){
+	  public Semesterverband anlegen(Semesterverband m ){
 			 Connection con = DBVerbindung.connection();
 
 			    try {
@@ -75,7 +77,7 @@ public class SemesterverbandMapper {
 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
 			        stmt.executeUpdate("INSERT INTO Semesterverband (SVNr, AnzahlStudierende, SemesterHalbjahr, Jahrgang) " + "VALUES ( "
-			        	+ "NULL,'" + m.getAnzahlStudierende() + "','" + m.getSemesterHalbjahr() +"','" +m.getJahrgang()+ "')");
+			        	+ "NULL,'" + m.getAnzahlStudenten() + "','" + m.getSemester() +"','" +m.getJahrgang()+ "')");
 			      //}
 			    }
 			    catch (SQLException e2) {
@@ -101,7 +103,7 @@ public class SemesterverbandMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("UPDATE Semesterverband " + "SET AnzahlStudierende=\"" + sv.getAnzahlStudierende() + "\" SET SemesterHalbjahr=\"" + sv.getSemesterHalbjahr() + "\" "+ "SET Jahrgang=\"" + sv.getJahrgang() + "WHERE SVNr=" + sv.getID());
+		      stmt.executeUpdate("UPDATE Semesterverband " + "SET AnzahlStudierende=\"" + sv.getAnzahlStudenten() + "\" SET SemesterHalbjahr=\"" + sv.getSemester() + "\" "+ "SET Jahrgang=\"" + sv.getJahrgang() + "WHERE SVNr=" + sv.getId());
 
 		    }
 		    catch (SQLException e2) {
@@ -118,15 +120,16 @@ public class SemesterverbandMapper {
 		    try {
 		      Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("DELETE FROM Semesterverband " + "WHERE SVNr=" + sv.getID());
+		      stmt.executeUpdate("DELETE FROM Semesterverband " + "WHERE SVNr=" + sv.getId());
 
 		    }
 		    catch (SQLException e2) {
 		      e2.printStackTrace();
-		    } 
+		    }
+			return sv; 
 		}	  
 
-		public Semesterverband findeId(Semesterverband sv){
+		public Semesterverband findeId(int i){
 		    // DB-Verbindung holen
 		    Connection con = DBVerbindung.connection();
 
@@ -136,7 +139,7 @@ public class SemesterverbandMapper {
 
 		      // Statement ausfüllen und als Query an die DB schicken
 		      ResultSet rs = stmt.executeQuery("SELECT SVNr, AnzahlStudierende, SemesterHalbjahr, Jahrgang FROM Semesterverband "
-		          + "WHERE SVNr=" + sv.id + " ORDER BY SVNr");
+		          + "WHERE SVNr=" + i + " ORDER BY SVNr");
 
 		      /*
 		       * Da sv Primärschlüssel ist, kann svx. nur ein Tupel zurückgegeben
@@ -146,8 +149,8 @@ public class SemesterverbandMapper {
 		        // Ergebnis-Tupel in Objekt umwandeln
 		    	Semesterverband sv = new Semesterverband();
 		        sv.setId(rs.getInt("SVNr"));
-		        sv.setAnzahlStudierende(rs.getInt("AnzahlStudierende"));
-				sv.setSemesterHalbjahr(rs.getString("SemesterHalbjahr"));
+		        sv.setAnzahlStudenten(rs.getInt("AnzahlStudierende"));
+				sv.setSemester(rs.getString("SemesterHalbjahr"));
 				sv.setJahrgang(rs.getInt("Jahrgang"));
 
 		        return sv;
@@ -177,12 +180,12 @@ public class SemesterverbandMapper {
 			      while (rs.next()) {
 			        Semesterverband sv = new Semesterverband();
 					sv.setId(rs.getInt("SVNr"));
-					sv.setAnzahlStudierende(rs.getInt("AnzahlStudierende"));
-					sv.setSemesterHalbjahr(rs.getString("SemesterHalbjahr"));
+					sv.setAnzahlStudenten(rs.getInt("AnzahlStudierende"));
+					sv.setSemester(rs.getString("SemesterHalbjahr"));
 					sv.setJahrgang(rs.getInt("Jahrgang"));
 
 			        // Hinzuf¸gen des neuen Objekts zum Ergebnisvektor
-			        result.addElement(d);
+			        result.addElement(sv);
 			      }
 			    }
 			    catch (SQLException e2) {
@@ -200,6 +203,6 @@ public class SemesterverbandMapper {
 		     * Kontoinhaber. Der CustomerMapper l‰sst uns dann diese ID in ein Objekt
 		     * auf.
 		     */
-		    return LehrveranstaltungMapper.lvMapper().findeId(sv.getSemesterverband());
+		    return LehrveranstaltungMapper.lvMapper().findeId(sv.getId());
 		  }
 }

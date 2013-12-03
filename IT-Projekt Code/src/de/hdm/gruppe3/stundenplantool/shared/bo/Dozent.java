@@ -18,6 +18,10 @@ public class Dozent extends BusinessObject {
 		this.nachname = nachname;
 		this.veranstaltungen = veranstaltungen;
 	}
+	
+	public Dozent(){
+		
+	}
 
 	// Getter und Setter
 	public String getVorname() {
