@@ -21,6 +21,11 @@ public class LVDurchfuehrung extends BusinessObject {
 		this.raum = raum;
 		this.semesterverband = semesterverband;
 	}
+	
+	
+	public LVDurchfuehrung() {
+	}
+
 
 	// Getter und Setter
 	public Lehrveranstaltung getVeranstaltung() {

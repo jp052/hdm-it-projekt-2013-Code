@@ -4,11 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.Vector;
 
-//Import Impl Klasse Dozent
-//Import bo Dozent
+import de.hdm.gruppe3.stundenplantool.shared.bo.*;
+
 
 public class DurchfuehrungMapper {
  /**
@@ -50,7 +49,7 @@ public class DurchfuehrungMapper {
 
      return dfMapper;
    }
-   public Durchfuehrung anlegen(Durchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
+   public LVDurchfuehrung anlegen(LVDurchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
     Connection con = DBVerbindung.connection();
 
        try {
@@ -86,7 +85,7 @@ public class DurchfuehrungMapper {
         * Rückgabe, des evtl. korrigierten Accounts.
         * 
         * HINWEIS: Da in Java nur Referenzen auf Objekte und keine physischen
-        * Objekte übergeben werden, wäre die Anpassung des Durchfuehrung-Objekts auch
+        * Objekte übergeben werden, wäre die Anpassung des s-Objekts auch
         * ohne diese explizite Rückgabe au�erhalb dieser Methode sichtbar. Die
         * explizite Rückgabe von a ist eher ein Stilmittel, um zu signalisieren,
         * dass sich das Objekt evtl. im Laufe der Methode verändert hat.
@@ -95,13 +94,13 @@ public class DurchfuehrungMapper {
    
   }
   
-  public Durchfuehrung modifizieren(Durchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
+  public LVDurchfuehrung modifizieren(LVDurchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
       Connection con = DBVerbindung.connection();
 
       try {
         Statement stmt = con.createStatement();
 
-        stmt.executeUpdate("UPDATE df " + "\" SET RaumNr=\"" + r.getId() + "\" "+ "SET ZeitNr=\"" + z.getId() + "\" "+"SET SVNr=\"" + sv.getPLZ() + "\" " + "SET EDVNr=\"" + lv.getOrt() + "\" "+ "WHERE df=" + df.getID());
+        stmt.executeUpdate("UPDATE df " + "\" SET RaumNr=\"" + r.getId() + "\" "+ "SET ZeitNr=\"" + z.getId() + "\" "+"SET SVNr=\"" + sv.getId() + "\" " + "SET EDVNr=\"" + lv.getOrt() + "\" "+ "WHERE df=" + df.getID());
 
       }
       catch (SQLException e2) {
@@ -112,7 +111,7 @@ public class DurchfuehrungMapper {
       return df;
   }
   
-  public Durchfuehrung loeschen(Durchfuehrung df){
+  public LVDurchfuehrung loeschen(LVDurchfuehrung df){
       Connection con = DBVerbindung.connection();
 
       try {
@@ -126,7 +125,7 @@ public class DurchfuehrungMapper {
       } 
   }
   
-  public Durchfuehrung findeId(Durchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
+  public LVDurchfuehrung findeId(LVDurchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
       // DB-Verbindung holen
       Connection con = DBVerbindung.connection();
 
@@ -144,7 +143,7 @@ public class DurchfuehrungMapper {
          */
         if (rs.next()) {
           // Ergebnis-Tupel in Objekt umwandeln
-       Durchfuehrung df = new Durchfuehrung();
+       LVDurchfuehrung df = new LVDurchfuehrung();
           df.setId(rs.getInt("LVDNr"));
           r.setId(rs.getInt("RaumNr"));
           sv.setId(rs.getInt("SVNr"));
