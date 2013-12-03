@@ -3,7 +3,7 @@ package de.hdm.gruppe3.stundenplantool.shared.bo;
 import java.io.Serializable;
 
 public abstract class BusinessObject implements Serializable {
-
+ //julia
   private static final long serialVersionUID = 1L;
 
   private int id = 0;
