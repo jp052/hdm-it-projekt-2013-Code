@@ -73,7 +73,7 @@ public class DurchfuehrungMapper {
 //           stmt = con.createStatement();
 
            // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-           stmt.executeUpdate("INSERT INTO df (LVDNr, ZeitNr, SVNr, RaumNr, EDVNr) " + "VALUES ( "
+           stmt.executeUpdate("INSERT INTO Durchfuehrung (LVDNr, ZeitNr, SVNr, RaumNr, LVNr) " + "VALUES ( "
             + "NULL,'" + df.getId() + "','" + r.getId() +"','" +sv.getId()+ "','" + lv.getId()+"','" +z.getId()+"')");
          //}
        }
