@@ -49,7 +49,9 @@ public class DurchfuehrungMapper {
 
      return dfMapper;
    }
-   public LVDurchfuehrung anlegen(LVDurchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
+   
+   //LVDurchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z
+   public LVDurchfuehrung anlegen(LVDurchfuehrung lvd){
     Connection con = DBVerbindung.connection();
 
        try {
@@ -74,7 +76,7 @@ public class DurchfuehrungMapper {
 
            // Jetzt erst erfolgt die tatsächliche Einfügeoperation
            stmt.executeUpdate("INSERT INTO Durchfuehrung (LVDNr, ZeitNr, SVNr, RaumNr, LVNr) " + "VALUES ( "
-            + "NULL,'" + df.getId() + "','" + r.getId() +"','" +sv.getId()+ "','" + lv.getId()+"','" +z.getId()+"')");
+            + "NULL,'" + lvd.getzIds() +"','" +lvd.getSemesterverband()+ "','" + lvd.getRaum()+"','" +lvd.getLvId()+"')");
          //}
        }
        catch (SQLException e2) {
@@ -90,17 +92,17 @@ public class DurchfuehrungMapper {
         * explizite Rückgabe von a ist eher ein Stilmittel, um zu signalisieren,
         * dass sich das Objekt evtl. im Laufe der Methode verändert hat.
         */
-       return df;
+       return lvd;
    
   }
   
-  public LVDurchfuehrung modifizieren(LVDurchfuehrung df, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
+  public LVDurchfuehrung modifizieren(LVDurchfuehrung df){
       Connection con = DBVerbindung.connection();
 
       try {
         Statement stmt = con.createStatement();
 
-        stmt.executeUpdate("UPDATE df " + "\" SET RaumNr=\"" + r.getId() + "\" "+ "SET ZeitNr=\"" + z.getId() + "\" "+"SET SVNr=\"" + sv.getId() + "\" " + "SET EDVNr=\"" + lv.getId() + "\" "+ "WHERE df=" + df.getId());
+        stmt.executeUpdate("UPDATE df " + "\" SET RaumNr=\"" + df.getRaum() + "\" "+ "SET ZeitNr=\"" + df.getzIds() + "\" "+"SET SVNr=\"" + df.getSemesterverband() + "\" " + "SET LVNr=\"" + df.getLvId() + "\" "+ "WHERE df=" + df.getId());
 
       }
       catch (SQLException e2) {
@@ -125,8 +127,8 @@ public class DurchfuehrungMapper {
       }
 	return df; 
   }
-  
-  public LVDurchfuehrung findeId(LVDurchfuehrung d, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z){
+  //, Raum r, Semesterverband sv, Lehrveranstaltung lv, Zeitslot z
+  public LVDurchfuehrung findeId(LVDurchfuehrung d){
       // DB-Verbindung holen
       Connection con = DBVerbindung.connection();
 
@@ -146,10 +148,10 @@ public class DurchfuehrungMapper {
           // Ergebnis-Tupel in Objekt umwandeln
        LVDurchfuehrung df = new LVDurchfuehrung();
           df.setId(rs.getInt("LVDNr"));
-          r.setId(rs.getInt("RaumNr"));
-          sv.setId(rs.getInt("SVNr"));
-          lv.setId(rs.getInt("EDVNr"));
-          z.setId(rs.getInt("ZeitNr"));
+          df.setRaum(rs.getInt("RaumNr"));
+          df.setSemesterverband(rs.getInt("SVNr"));
+          df.setLV(rs.getInt("LDVNr"));
+          df.setZIds(rs.getInt("ZeitNr"));
 
           return df;
         }

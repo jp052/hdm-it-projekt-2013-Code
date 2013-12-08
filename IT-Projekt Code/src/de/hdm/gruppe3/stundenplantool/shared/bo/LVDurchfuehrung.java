@@ -9,18 +9,45 @@ public class LVDurchfuehrung extends BusinessObject {
 
 	private Lehrveranstaltung veranstaltung;
 	private Vector<Zeitslot> zeitslots = new Vector<Zeitslot>();
-	private Raum raum;
-	private Semesterverband semesterverband;
+	private int raum;
+	private int semesterverband;
+	private int lvId;
+	private int zIds;
+
+	public int getzIds() {
+		return zIds;
+	}
+
+
+	public void setZIds(int zIds2) {
+		this.zIds = zIds2;
+	}
+
+
+	public int getLvId() {
+		return lvId;
+	}
+
+
+	public void setLV(int lvId) {
+		this.lvId = lvId;
+	}
+
+
+	public void setSemesterverband(int semesterverband) {
+		this.semesterverband = semesterverband;
+	}
+
 
 	// Konstruktor
-	public LVDurchfuehrung(Lehrveranstaltung veranstaltung,
+	/*public LVDurchfuehrung(Lehrveranstaltung veranstaltung,
 			Vector<Zeitslot> zeitslots, Raum raum,
 			Semesterverband semesterverband) {
 		this.veranstaltung = veranstaltung;
 		this.zeitslots = zeitslots;
 		this.raum = raum;
 		this.semesterverband = semesterverband;
-	}
+	}*/
 	
 	
 	public LVDurchfuehrung() {
@@ -44,20 +71,20 @@ public class LVDurchfuehrung extends BusinessObject {
 		this.zeitslots = zeitslots;
 	}
 
-	public Raum getRaum() {
+	public int getRaum() {
 		return raum;
 	}
 
-	public void setRaum(Raum raum) {
-		this.raum = raum;
+	public void setRaum(int raumId) {
+		this.raum = raumId;
 	}
 
-	public Semesterverband getSemesterverband() {
+	public int getSemesterverband() {
 		return semesterverband;
 	}
 
 	public void setSemesterverband(Semesterverband semesterverband) {
-		this.semesterverband = semesterverband;
+		this.semesterverband = semesterverband.getId();
 	}
 
 }
