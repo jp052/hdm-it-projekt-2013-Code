@@ -6,3 +6,5 @@ war/WEB-INF/deploy
 war/stundenplantool
 gwt-unitCache
 .gwt
+*.jar
+*.class

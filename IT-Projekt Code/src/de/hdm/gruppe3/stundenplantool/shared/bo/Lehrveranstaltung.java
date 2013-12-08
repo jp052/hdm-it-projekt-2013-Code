@@ -1,6 +1,6 @@
 package de.hdm.gruppe3.stundenplantool.shared.bo;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 public class Lehrveranstaltung extends BusinessObject {
 
@@ -11,11 +11,11 @@ public class Lehrveranstaltung extends BusinessObject {
 	private double umfang;
 	private int semester;
 	private Dozent dozent;
-	private ArrayList<LVDurchfuehrung> durchfuehungen = new ArrayList<LVDurchfuehrung>();
+	private Vector<LVDurchfuehrung> durchfuehungen = new Vector<LVDurchfuehrung>();
 
 	// Konstruktor
 	public Lehrveranstaltung(String bezeichnung, double umfang, int semester,
-			Dozent dozent, ArrayList<LVDurchfuehrung> durchfuehungen) {
+			Dozent dozent, Vector<LVDurchfuehrung> durchfuehungen) {
 		this.bezeichnung = bezeichnung;
 		this.umfang = umfang;
 		this.semester = semester;
@@ -60,11 +60,11 @@ public class Lehrveranstaltung extends BusinessObject {
 		this.dozent = dozent;
 	}
 
-	public ArrayList<LVDurchfuehrung> getDurchfuehungen() {
+	public Vector<LVDurchfuehrung> getDurchfuehungen() {
 		return durchfuehungen;
 	}
 
-	public void setDurchfuehungen(ArrayList<LVDurchfuehrung> durchfuehungen) {
+	public void setDurchfuehungen(Vector<LVDurchfuehrung> durchfuehungen) {
 		this.durchfuehungen = durchfuehungen;
 	}
 }

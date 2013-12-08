@@ -1,6 +1,6 @@
 package de.hdm.gruppe3.stundenplantool.shared.bo;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 public class Semesterverband extends BusinessObject {
 
@@ -13,7 +13,7 @@ public class Semesterverband extends BusinessObject {
 
 	// Konstruktor
 	public Semesterverband(String semester, int jahrgang, int anzahlStudenten,
-			ArrayList<LVDurchfuehrung> durchfuehungen) {
+			Vector<LVDurchfuehrung> durchfuehungen) {
 		this.semester = semester;
 		this.jahrgang = jahrgang;
 		this.anzahlStudenten = anzahlStudenten;
@@ -49,13 +49,13 @@ public class Semesterverband extends BusinessObject {
 		this.anzahlStudenten = anzahlStudenten;
 	}
 
-	public ArrayList<LVDurchfuehrung> getDurchfuehungen() {
+	public Vector<LVDurchfuehrung> getDurchfuehungen() {
 		return durchfuehungen;
 	}
 
-	public void setDurchfuehungen(ArrayList<LVDurchfuehrung> durchfuehungen) {
+	public void setDurchfuehungen(Vector<LVDurchfuehrung> durchfuehungen) {
 		this.durchfuehungen = durchfuehungen;
 	}
 
-	private ArrayList<LVDurchfuehrung> durchfuehungen = new ArrayList<LVDurchfuehrung>();
+	private Vector<LVDurchfuehrung> durchfuehungen = new Vector<LVDurchfuehrung>();
 }
