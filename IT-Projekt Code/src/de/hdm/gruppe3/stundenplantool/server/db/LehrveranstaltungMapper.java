@@ -131,7 +131,7 @@ public class LehrveranstaltungMapper {
 			return lv; 
 		}
 		
-		public Lehrveranstaltung findeName(Lehrveranstaltung lv){
+		public Lehrveranstaltung findeName(String bez){
 		    // DB-Verbindung holen
 		    Connection con = DBVerbindung.connection();
 
@@ -141,7 +141,7 @@ public class LehrveranstaltungMapper {
 
 		      // Statement ausfüllen und als Query an die DB schicken
 		      ResultSet rs = stmt.executeQuery("SELECT LVNr, Bezeichnung, Umfang, Semester FROM Lehrveranstaltung "
-		          + "WHERE Bezeichnung=" + lv.getBezeichnung() + " ORDER BY bezeichnung");
+		          + "WHERE Bezeichnung=" + bez + " ORDER BY bezeichnung");
 
 		      /*
 		       * Da lv Primärschlüssel ist, kann lvx. nur ein Tupel zurückgegeben
