@@ -34,7 +34,7 @@ implements Stundenplanverwaltung{
 
 	public StundenplanverwaltungImpl () throws IllegalArgumentException {}
 
-
+	@Override
 	public void init () throws IllegalArgumentException {
 
 		svMapper = SemesterverbandMapper.svMapper();
@@ -47,6 +47,7 @@ implements Stundenplanverwaltung{
 
 
 	//Methoden Semesterverband
+	@Override
 	public Semesterverband anlegenSemesterverband(String semesterhalbjahr, int anzahlStudierende, int jahrgang) {
 
 		Semesterverband sv = new Semesterverband();
@@ -56,7 +57,7 @@ implements Stundenplanverwaltung{
 		return svMapper.anlegen(sv);
 		}
 
-
+	@Override
 	public Semesterverband modifizierenSemesterverband (String semesterhalbjahr, int anzahlStudierende, int jahrgang){ //StundenplanVerwaltung anpassen !!!
 		
 		Semesterverband sv = new Semesterverband ();
@@ -66,6 +67,7 @@ implements Stundenplanverwaltung{
 		return svMapper.modifizieren(sv);
 		}
 
+	@Override
 	public Semesterverband getSemesterverbandByNummer (int nr){
 		
 		return svMapper.findeId(nr);
@@ -85,6 +87,7 @@ implements Stundenplanverwaltung{
 
 
 	//TODO Methoden Zeitslot, Zeitslot muss verändert werden, da die Attribute noch nicht vollständig sind
+	@Override
 	public Zeitslot anlegenZeitslot (String wochentag) {	//Kleinschreibung Diagramm übernehmen, Aktuelle Attribute von der Klasse Zeitslot hier einfügen
 		
 		Zeitslot z = new Zeitslot();
@@ -92,6 +95,7 @@ implements Stundenplanverwaltung{
 		return zMapper.anlegen(z);
 		}
 
+	@Override
 	public Zeitslot modifizierenZeitslot (String wochentag){ //wochentag in Diagramm übernehmen bzw. ersetzen
 		
 		Zeitslot z = new Zeitslot ();
@@ -99,11 +103,13 @@ implements Stundenplanverwaltung{
 		return zMapper.modifizieren(z);
 		}
 
+	@Override
 	public Zeitslot loeschenZeitslot (Zeitslot z){
 
 		return zMapper.loeschen(z);
 		}
-
+	
+	@Override
 	public Zeitslot getZeitslotByNummer (int nr){
 		
 		return zMapper.findeId(nr);
@@ -111,6 +117,7 @@ implements Stundenplanverwaltung{
 
 
 	//Methoden Raum
+	@Override
 	public Raum anlegenRaum (String bez, int kapa){
 		
 		Raum r = new Raum ();
@@ -119,7 +126,7 @@ implements Stundenplanverwaltung{
 		return rMapper.anlegen(r);
 		}
 
-
+	@Override
 	public Raum modifizierenRaum (String bez, int kapa){ //Diagramm anpassen
 
 		Raum r = new Raum ();
@@ -128,19 +135,19 @@ implements Stundenplanverwaltung{
 		return rMapper.modifizieren(r);
 		}
 
-
+	@Override
 	public Raum loeschenRaum (Raum r){
 
 		return rMapper.loeschen(r);
 		}
 
-
+	@Override
 	public Raum getRaumbyNummer (int nr){
 
 		return rMapper.findeId(nr);
 		}
 
-
+	@Override
 	public Raum getRaumByBezeichnung (Raum r){
 
 		return rMapper.findeName(r);
@@ -154,6 +161,7 @@ implements Stundenplanverwaltung{
 
 
 	//Methoden Lehrveranstaltung
+	@Override
 	public Lehrveranstaltung anlegenLehrveranstaltung (String bezeichnung, int semester, int umfang){ //Kleinschreibung Diagramm übernehmen
 
 		Lehrveranstaltung l = new Lehrveranstaltung ();
@@ -163,7 +171,7 @@ implements Stundenplanverwaltung{
 		return lvMapper.anlegen(l);
 		}
 
-
+	@Override
 	public Lehrveranstaltung modifizierenLehrveranstaltung (String bezeichnung, int semester, int umfang){ //Diagramm anpassen
 
 		Lehrveranstaltung l = new Lehrveranstaltung ();
@@ -173,18 +181,19 @@ implements Stundenplanverwaltung{
 		return lvMapper.modifizieren(l);
 		}
 
+	@Override
 	public Lehrveranstaltung loeschenLehrveranstaltung (Lehrveranstaltung lv){
 
 		return lvMapper.loeschen(lv);
 		}
 
-
+	@Override
 	public Lehrveranstaltung getLehrveranstaltungByNummer (int nr){
 
 		return lvMapper.findeId(nr);
 		}
 
-
+	@Override
 	public Lehrveranstaltung getLehrveranstaltungByBezeichnung (String bez){
 
 		return lvMapper.findeName(bez);
@@ -192,6 +201,7 @@ implements Stundenplanverwaltung{
 
 
 	//Methoden Dozent
+	@Override
 	public Dozent anlegenDozent (String vorname, String nachname){ //Kleinschreibung Diagramm übernehmen
 
 		Dozent d = new Dozent ();
@@ -200,6 +210,7 @@ implements Stundenplanverwaltung{
 		return dMapper.anlegen(d);
 		}
 
+	@Override
 	public Dozent modifizierenDozent (String vorname, String nachname){ //Diagramm anpassen
 		
 		Dozent d = new Dozent ();
@@ -208,18 +219,19 @@ implements Stundenplanverwaltung{
 		return dMapper.modifizieren(d);
 		}
 
+	@Override
 	public Dozent loeschenDozent (Dozent d){
 
 		return dMapper.loeschen(d);
 		}
 		
-
+	@Override
 	public Dozent getDozentByNummer (int nr){
 
 		return dMapper.findeId(nr);
 		}
 
-
+	@Override
 	public Dozent getDozentByName (Dozent name){
 
 		return dMapper.findeName (name);
@@ -227,6 +239,7 @@ implements Stundenplanverwaltung{
 
 
 	//Methoden LVDurchführung
+	@Override
 	public LVDurchfuehrung anlegenDurchfuehrung (int svId, int raumId, int lvId, int zIds){
 
 		LVDurchfuehrung lvd = new LVDurchfuehrung();
@@ -237,7 +250,7 @@ implements Stundenplanverwaltung{
 		return dfMapper.anlegen(lvd);
 		}
 
-
+	@Override
 	public LVDurchfuehrung modifizierenDurchfuehrung (int svId, int raumId, int lvId, int zIds){
 
 		LVDurchfuehrung lvd = new LVDurchfuehrung();
@@ -248,19 +261,21 @@ implements Stundenplanverwaltung{
 		return dfMapper.modifizieren(lvd);
 		}
 		
-
+	@Override
 	public LVDurchfuehrung loeschenDurchfuehrung (LVDurchfuehrung d){ //Diagramm anpassen
 		
 		return dfMapper.loeschen(d);	
 		}
 
-
-	public LVDurchfuehrung getDurchfuehrungByNummer (int nr){
+	@Override
+	public LVDurchfuehrung getDurchfuehrungByNummer (LVDurchfuehrung nr){
 
 		return dfMapper.findeId(nr);
 		}
 
-
+	
+	
+	
 	@Override
 	public Semesterverband getSemesterverbandBySemesterHalbjahr(
 			String semesterHalbjahr) {
@@ -268,82 +283,16 @@ implements Stundenplanverwaltung{
 		return null;
 	}
 
-
 	@Override
 	public Semesterverband loeschenSemesterverband(Semesterverband sv) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-	@Override
-	public Zeitslot anlegenZeitslot(String wochentag, int anfangszeit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Zeitslot modifizierenZeitslot(Zeitslot z) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Raum modifizierenRaum(Raum r) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Lehrveranstaltung modifizierenLehrveranstaltung(Lehrveranstaltung lv) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Dozent modifizierenDozent(Dozent d) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Dozent getDozentByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public LVDurchfuehrung anlegenDurchfuehrung(int svId, int raumId, int lvId,
-			int zIds) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public LVDurchfuehrung modifizierenDurchfuehrung(int svId, int raumId,
-			int lvId, int zIds) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Raum getRaumByBezeichnung(String bez) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@Override
 	public Vector<Raum> getAllRaeume() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

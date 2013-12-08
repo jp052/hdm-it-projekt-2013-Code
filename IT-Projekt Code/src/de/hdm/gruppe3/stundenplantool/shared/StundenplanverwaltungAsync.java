@@ -28,16 +28,15 @@ public interface StundenplanverwaltungAsync {
 	void anlegenSemesterverband(String semesterhalbjahr, int anzahlStudierende,
 			int jahrgang, AsyncCallback<Semesterverband> callback);
 
-	void anlegenZeitslot(String wochentag, int anfangszeit,
-			AsyncCallback<Zeitslot> callback);
+	void anlegenZeitslot(String wochentag, AsyncCallback<Zeitslot> callback);
 
 	void getAllRaeume(AsyncCallback<Vector<Raum>> callback);
 
-	void getDozentByName(String name, AsyncCallback<Dozent> callback);
+	void getDozentByName(Dozent name, AsyncCallback<Dozent> callback);
 
 	void getDozentByNummer(int nr, AsyncCallback<Dozent> callback);
 
-	void getDurchfuehrungByNummer(int nr,
+	void getDurchfuehrungByNummer(LVDurchfuehrung nr,
 			AsyncCallback<LVDurchfuehrung> callback);
 
 	void getLehrveranstaltungByBezeichnung(String bez,
@@ -46,7 +45,7 @@ public interface StundenplanverwaltungAsync {
 	void getLehrveranstaltungByNummer(int nr,
 			AsyncCallback<Lehrveranstaltung> callback);
 
-	void getRaumByBezeichnung(String bez, AsyncCallback<Raum> callback);
+	void getRaumByBezeichnung(Raum r, AsyncCallback<Raum> callback);
 
 	void getRaumbyNummer(int nr, AsyncCallback<Raum> callback);
 
@@ -60,7 +59,8 @@ public interface StundenplanverwaltungAsync {
 
 	void loeschenDozent(Dozent d, AsyncCallback<Dozent> callback);
 
-	void loeschenDurchfuehrung(LVDurchfuehrung d, AsyncCallback<Void> callback);
+	void loeschenDurchfuehrung(LVDurchfuehrung d,
+			AsyncCallback<LVDurchfuehrung> callback);
 
 	void loeschenLehrveranstaltung(Lehrveranstaltung lv,
 			AsyncCallback<Lehrveranstaltung> callback);
@@ -72,20 +72,21 @@ public interface StundenplanverwaltungAsync {
 
 	void loeschenZeitslot(Zeitslot z, AsyncCallback<Zeitslot> callback);
 
-	void modifizierenDozent(Dozent d, AsyncCallback<Dozent> callback);
+	void modifizierenDozent(String vorname, String nachname,
+			AsyncCallback<Dozent> callback);
 
 	void modifizierenDurchfuehrung(int svId, int raumId, int lvId, int zIds,
 			AsyncCallback<LVDurchfuehrung> callback);
 
-	void modifizierenLehrveranstaltung(Lehrveranstaltung lv,
-			AsyncCallback<Lehrveranstaltung> callback);
+	void modifizierenLehrveranstaltung(String bezeichnung, int semester,
+			int umfang, AsyncCallback<Lehrveranstaltung> callback);
 
-	void modifizierenRaum(Raum r, AsyncCallback<Raum> callback);
+	void modifizierenRaum(String bez, int kapa, AsyncCallback<Raum> callback);
 
 	void modifizierenSemesterverband(String semesterhalbjahr,
 			int anzahlStudierende, int jahrgang,
 			AsyncCallback<Semesterverband> callback);
 
-	void modifizierenZeitslot(Zeitslot z, AsyncCallback<Zeitslot> callback);
+	void modifizierenZeitslot(String wochentag, AsyncCallback<Zeitslot> callback);
 
 }

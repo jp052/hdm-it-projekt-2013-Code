@@ -21,9 +21,9 @@ public interface Stundenplanverwaltung extends RemoteService{
 
 	public Semesterverband loeschenSemesterverband (Semesterverband sv);
 
-	public Zeitslot anlegenZeitslot (String wochentag, int anfangszeit);
+	//public Zeitslot anlegenZeitslot (String wochentag, int anfangszeit);
 
-	public Zeitslot modifizierenZeitslot (Zeitslot z);
+	//public Zeitslot modifizierenZeitslot (Zeitslot z);
 
 	public Zeitslot loeschenZeitslot (Zeitslot z);
 
@@ -31,7 +31,7 @@ public interface Stundenplanverwaltung extends RemoteService{
 
 	public Raum anlegenRaum (String Bezeichnung, int Kapazität);//klein schreiben !
 
-	public Raum modifizierenRaum (Raum r);
+	//public Raum modifizierenRaum (Raum r);
 
 	public Raum loeschenRaum (Raum r);
 
@@ -39,7 +39,7 @@ public interface Stundenplanverwaltung extends RemoteService{
 
 	public Lehrveranstaltung anlegenLehrveranstaltung (String Bezeichnung, int Semester, int Umfang);
 
-	public Lehrveranstaltung modifizierenLehrveranstaltung (Lehrveranstaltung lv);
+	//public Lehrveranstaltung modifizierenLehrveranstaltung (Lehrveranstaltung lv);
 
 	public Lehrveranstaltung loeschenLehrveranstaltung (Lehrveranstaltung lv);
 
@@ -49,25 +49,42 @@ public interface Stundenplanverwaltung extends RemoteService{
 
 	public Dozent anlegenDozent (String Vorname, String Nachname);
 
-	public Dozent modifizierenDozent (Dozent d);
+	//public Dozent modifizierenDozent (Dozent d);
 
 	public Dozent loeschenDozent (Dozent d);
 
 	public Dozent getDozentByNummer (int nr);
 
-	public Dozent getDozentByName (String name);
+	//public Dozent getDozentByName (String name);
 
 	public LVDurchfuehrung anlegenDurchfuehrung (int svId, int raumId, int lvId, int zIds);
 
 	public LVDurchfuehrung modifizierenDurchfuehrung (int svId, int raumId, int lvId, int zIds);
 
-	public void loeschenDurchfuehrung (LVDurchfuehrung d);
+	public LVDurchfuehrung loeschenDurchfuehrung (LVDurchfuehrung d);
 
-	public LVDurchfuehrung getDurchfuehrungByNummer (int nr);
+	//public LVDurchfuehrung getDurchfuehrungByNummer (int nr);
 
-	public Raum getRaumByBezeichnung (String bez);
+	//public Raum getRaumByBezeichnung (String bez);
 
 	Vector<Raum> getAllRaeume();
+
+	Lehrveranstaltung modifizierenLehrveranstaltung(String bezeichnung,
+			int semester, int umfang);
+
+	Dozent getDozentByName(Dozent name);
+
+	LVDurchfuehrung getDurchfuehrungByNummer(LVDurchfuehrung nr);
+
+	Dozent modifizierenDozent(String vorname, String nachname);
+
+	Raum getRaumByBezeichnung(Raum r);
+
+	Zeitslot anlegenZeitslot(String wochentag);
+
+	Zeitslot modifizierenZeitslot(String wochentag);
+
+	Raum modifizierenRaum(String bez, int kapa);
 
 
 
